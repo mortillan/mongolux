@@ -1,0 +1,24 @@
+{
+  "name": "mongolux",
+  "version": "0.1.0-0",
+  "description": "A light node.js mongodb wrapper. No schemas, no magic, just plain node.js.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mongolux",
+    "mongo",
+    "mongodb",
+    "lightweight",
+    "light",
+    "wrapper",
+    "mongoose",
+    "mongojs"
+  ],
+  "author": "mortillan",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^3.1.10"
+  }
+}
