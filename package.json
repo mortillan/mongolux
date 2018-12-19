@@ -4,21 +4,37 @@
   "description": "A light node.js mongodb wrapper. No schemas, no magic, just plain node.js.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node ./scripts/createConfig.js"
   },
   "keywords": [
     "mongolux",
+    "mongo-lux",
     "mongo",
     "mongodb",
-    "lightweight",
-    "light",
-    "wrapper",
     "mongoose",
-    "mongojs"
+    "mongojs",
+    "mongolite",
+    "lightweight",
+    "driver",
+    "database",
+    "light",
+    "lite",
+    "lux",
+    "minimal",
+    "wrapper"
   ],
   "author": "mortillan",
   "license": "MIT",
+  "homepage": "https://github.com/mortillan/mongolux",
   "dependencies": {
     "mongodb": "^3.1.10"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-events": "0.0.2",
+    "mocha": "^5.2.0",
+    "mongodb-memory-server": "^2.8.0"
   }
 }
