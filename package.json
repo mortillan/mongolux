@@ -4,8 +4,7 @@
   "description": "A light node.js mongodb wrapper. No schemas, no magic, just plain node.js.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "node ./scripts/createConfig.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "mongolux",
@@ -22,7 +21,8 @@
     "lite",
     "lux",
     "minimal",
-    "wrapper"
+    "wrapper",
+    "express"
   ],
   "author": "mortillan",
   "license": "MIT",
