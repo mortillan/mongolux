@@ -1,54 +1,39 @@
 const chai = require('chai')
-chai.use(require("chai-events"));
-chai.use(require('chai-as-promised'));
+chai.use(require("chai-events"))
+chai.use(require('chai-as-promised'))
+chai.should()
 const expect = chai.expect
-const should = chai.should()
 
 const mms = require('mongodb-memory-server')
 const connectionFactory = require('../src/connection')
-const { Db, MongoClient } = require('mongodb')
+const { Db } = require('mongodb')
 
 describe('connectionFactory', function () {
-  it('Shoud connect to mongodb using mongolux', async function () {
-    const mongod = new mms.MongoMemoryServer()
 
-    const connectionString = await mongod.getConnectionString()
-    const dbName = await mongod.getDbName()
-    const uri = connectionString.replace(dbName, '')
+  let mongod1
+  const configFile = 'config/database'
+  const file = JSON.parse(JSON.stringify(require.main.require(configFile)))
 
-    const client = await connectionFactory(uri, {
-      useNewUrlParser: true,
+  beforeEach(function () {
+    mongod1 = new mms.MongoMemoryServer({
+      instance: {
+        dbName: file.database1.db,
+      }
     })
-
-    expect(client).to.be.instanceOf(MongoClient)
   })
 
-  it('Should fail to connect if mongodb is down', async function () {
-    const mongod = new mms.MongoMemoryServer()
+  it('Shoud throw error when connection string is invalid', async function () {
+    file.database1.uri = 'mongodb://127.0.0.1:0000/db1' //invalid uri
 
-    const connectionString = await mongod.getConnectionString()
-    const dbName = await mongod.getDbName()
-    const uri = connectionString.replace(dbName, '')
+    const { uri, db, ...opts } = file.database1
 
-    await mongod.stop()
-    
-    // const client = connectionFactory(uri, {
-    //   useNewUrlParser: true,
-    // })
-
-    // try {
-      // expect(await client).should.emit('error')
-    // } catch (error) {
-    //   console.log(error instanceof Error)
-    // }
-    
-    // try {
-    //   expect(await client).to.be.rejectedWith(Error)
-    // } catch (error) {
-    //   console.log(error.stack)
-    // }
-    
+    return connectionFactory(uri, opts).should.be.rejected
   })
 
+  it('Shoud throw error when connecting while mongodb server is down', async function () {
+    const { uri, db, ...opts } = file.database2
+    
+    return connectionFactory(uri, opts).should.be.rejected
+  })
 
 })

@@ -1,20 +1,23 @@
 const chai = require('chai')
-chai.use(require("chai-events"));
-chai.use(require('chai-as-promised'));
+chai.use(require("chai-events"))
+chai.use(require('chai-as-promised'))
+chai.use(require('chai-iterator'))
+chai.should();
 const expect = chai.expect
-const should = chai.should()
+const sinon = require('sinon')
 
 const mms = require('mongodb-memory-server')
 const { bootstrap, db } = require('../src/index')
-const { MongoClient } = require('mongodb')
+const { Db, MongoError } = require('mongodb')
 
-describe('connectionFactory', function () {
+describe('bootstrap', function () {
 
-  it('Shoud load config file and connect to mongodb', async function () {
-    const configFile = 'config/database.js'
-    const file = require.main.require(configFile)
-    
-    const mongod1 = new mms.MongoMemoryServer({
+  let mongod1, mongod2
+  const configFile = 'config/database'
+  const file = JSON.parse(JSON.stringify(require.main.require(configFile)))
+
+  beforeEach(async function () {
+    mongod1 = new mms.MongoMemoryServer({
       instance: {
         dbName: file.database1.db,
       }
@@ -22,45 +25,38 @@ describe('connectionFactory', function () {
 
     file.database1.uri = await mongod1.getConnectionString()
 
-    const mongod2 = new mms.MongoMemoryServer({
+    mongod2 = new mms.MongoMemoryServer({
       instance: {
         dbName: file.database2.db,
       }
     })
 
     file.database2.uri = await mongod2.getConnectionString()
+  })
 
+
+  it('Shoud load config file and connect to mongodb', async function () {
     await bootstrap(file)
-    console.log(db('database1'))
-    // expect(db('database1')).to.be.instanceOf(MongoClient)
+
+    expect(db('database1')).to.be.instanceOf(Db)
+    expect(db('database2')).to.be.instanceOf(Db)
   })
 
-  it('Should fail to connect if mongodb is down', async function () {
-    // const mongod = new mms.MongoMemoryServer()
+  it('Should throw error if one failed to connect to mongod server', async function () {
+    await mongod1.stop()
 
-    // const connectionString = await mongod.getConnectionString()
-    // const dbName = await mongod.getDbName()
-    // const uri = connectionString.replace(dbName, '')
-
-    // await mongod.stop()
-    
-    // const client = connectionFactory(uri, {
-    //   useNewUrlParser: true,
-    // })
-
-    // try {
-      // expect(await client).should.emit('error')
-    // } catch (error) {
-    //   console.log(error instanceof Error)
-    // }
-    
-    // try {
-    //   expect(await client).to.be.rejectedWith(Error)
-    // } catch (error) {
-    //   console.log(error.stack)
-    // }
-    
+    return bootstrap(file).should.be.rejected
   })
 
+  it('Should be able to add listener per connection', async function () {
+    await bootstrap(file)
+
+    const callback = sinon.spy()
+    db('database1').on('close', callback)
+
+    await mongod1.stop()
+
+    expect(callback.called).to.be.true
+  })
 
 })
