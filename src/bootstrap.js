@@ -19,8 +19,8 @@ module.exports.bootstrap = async (config = {}) => {
   try {
     const connResolved = await Promise.all(connPending)
 
-    configArray.forEach(([name, config], index) => {
-      connections.set(name, connResolved[index])
+    configArray.forEach(([name], index) => {
+      connections.set(name, connResolved[index].db(name))
     })
   } catch (err) {
     throw err
