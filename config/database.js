@@ -1,27 +1,13 @@
-# Mongo Lux
-###### A thin wrapper :package: to [MongoDB node.js driver](https://mongodb.github.io/node-mongodb-native/) using ES6.
-###### No schema, no magic, just plain objects{} and array of objects[{}...]
-## Prefer node.js version 8 onwards
+/**
+ * Template config file to be used by mongolux.bootstrap() function.
+ * You can copy this file and overwrite values as needed. 
+ * 
+ * All except uri and db are present in the Mongodb node.js driver documentation.
+ * Visit http://mongodb.github.io/node-mongodb-native/3.1/reference/connecting/connection-settings/
+ * for more details.
+ * 
+ */
 
-## Supported node.js frameworks
-* [express.js](https://www.npmjs.com/package/express)
-* [connect](https://www.npmjs.com/package/connect)
-
-## Installation
-
-`npm install mongolux`
-
-## Bootstrapping your application
-```
-const { bootstrap, db } = require('mongolux');
-....
-
-await bootstrap(require('./path/to/config/database'));
-```
-
-## Create your config file (database.js is just a filename)
-This is what your database.js file should look like
-```
 module.exports = {
   database1: {
     uri: 'mongodb://127.0.0.1:4000/?retryWrites=true',
@@ -116,30 +102,3 @@ module.exports = {
     logger: null,
   },
 }
-```
-
-All `options` passed to [MongoClient](http://mongodb.github.io/node-mongodb-native/3.1/api/MongoClient.html) is supported except for `db` (mongolux uses this internally)
-
-## Querying your MongoDB database
-```
-const { db } = require('mongolux');
-
-...
-
-const users = await db('database1').collection('users').find({}).toArray();
-```
-
-`.collection('users').find({}).toArray();`
-
-Seems familiar? Well, those are just functions from the [MongoDB node.js driver](https://mongodb.github.io/node-mongodb-native/) API. Everything is exactly that because we just wrapped the [mongodb package](https://www.npmjs.com/package/mongodb).
-
-## Binding listeners for each database connection
-```
-db().forEach((conn, name) => {
-  conn.on('close', () => console.log(`Disconnected from mongolux ${name}...`))
-  conn.on('reconnect', () => console.log(`Reconnected from mongolux ${name}...`))
-})
-```
-
-## Note
-I use this on my site. If you need any help, please file an issue @Github
