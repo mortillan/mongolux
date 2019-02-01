@@ -1,6 +1,7 @@
 # Mongo Lux
-###### A thin wrapper :package: to [MongoDB node.js driver] (https://mongodb.github.io/node-mongodb-native/) using ES6.
+###### A thin wrapper :package: to [MongoDB node.js driver](https://mongodb.github.io/node-mongodb-native/) using ES6.
 ###### No schema, no magic, just plain objects{} and array of objects[{}...]
+## Prefer node.js version 8 onwards
 
 ## Supported node.js frameworks
 * [express.js](https://www.npmjs.com/package/express)
@@ -117,7 +118,7 @@ module.exports = {
 }
 ```
 
-All `options` passed to [MongoClient] (http://mongodb.github.io/node-mongodb-native/3.1/api/MongoClient.html) is supported except for `db` (mongolux uses this internally)
+All `options` passed to [MongoClient](http://mongodb.github.io/node-mongodb-native/3.1/api/MongoClient.html) is supported except for `db` (mongolux uses this internally)
 
 ## Querying your MongoDB database
 ```
@@ -130,7 +131,7 @@ const users = await db('database1').collection('users').find({}).toArray();
 
 `.collection('users').find({}).toArray();`
 
-Seems familiar? Well, those are just functions from the [MongoDB node.js driver] (https://mongodb.github.io/node-mongodb-native/) API. Everything is exactly that because we just wrapped the [mongodb package] (https://www.npmjs.com/package/mongodb).
+Seems familiar? Well, those are just functions from the [MongoDB node.js driver](https://mongodb.github.io/node-mongodb-native/) API. Everything is exactly that because we just wrapped the [mongodb package](https://www.npmjs.com/package/mongodb).
 
 ## Binding listeners for each database connection
 ```
