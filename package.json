@@ -22,7 +22,8 @@
     "lux",
     "minimal",
     "wrapper",
-    "express"
+    "express",
+    "connect"
   ],
   "author": "mortillan",
   "license": "MIT",
