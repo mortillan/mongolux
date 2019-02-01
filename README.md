@@ -11,7 +11,7 @@
 
 `npm install mongolux`
 
-## Bootstrapping your express.js application
+## Bootstrapping your application
 ```
 const { bootstrap, db } = require('mongolux');
 ....
@@ -135,9 +135,9 @@ Seems familiar? Well, those are just functions from the [MongoDB node.js driver]
 
 ## Binding listeners for each database connection
 ```
-db().forEach((client, name) => {
-  client.on('close', () => console.log(`Disconnected from mongolux ${name}...`))
-  client.on('reconnect', () => console.log(`Reconnected from mongolux ${name}...`))
+db().forEach((conn, name) => {
+  conn.on('close', () => console.log(`Disconnected from mongolux ${name}...`))
+  conn.on('reconnect', () => console.log(`Reconnected from mongolux ${name}...`))
 })
 ```
 
