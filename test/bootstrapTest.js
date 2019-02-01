@@ -14,7 +14,7 @@ describe('bootstrap', function () {
 
   let mongod1, mongod2
   const configFile = 'config/database'
-  const file = require.main.require(configFile)
+  const file = JSON.parse(JSON.stringify(require.main.require(configFile)))
 
   beforeEach(async function () {
     mongod1 = new mms.MongoMemoryServer({
@@ -34,15 +34,6 @@ describe('bootstrap', function () {
     file.database2.uri = await mongod2.getConnectionString()
   })
 
-  after(async function () {
-    // try{
-    //   await mongod1.stop()
-    // await mongod2.stop()
-    // } catch(err) {
-    //   console.log(err)
-    // }
-    
-  })
 
   it('Shoud load config file and connect to mongodb', async function () {
     await bootstrap(file)

@@ -12,7 +12,7 @@ describe('connectionFactory', function () {
 
   let mongod1
   const configFile = 'config/database'
-  const file = require.main.require(configFile)
+  const file = JSON.parse(JSON.stringify(require.main.require(configFile)))
 
   beforeEach(function () {
     mongod1 = new mms.MongoMemoryServer({
@@ -32,7 +32,7 @@ describe('connectionFactory', function () {
 
   it('Shoud throw error when connecting while mongodb server is down', async function () {
     const { uri, db, ...opts } = file.database2
-
+    
     return connectionFactory(uri, opts).should.be.rejected
   })
 
