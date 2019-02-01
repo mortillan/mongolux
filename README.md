@@ -2,6 +2,10 @@
 ###### A thin wrapper :package: to [MongoDB node.js driver] (https://mongodb.github.io/node-mongodb-native/) using ES6.
 ###### No schema, no magic, just plain objects{} and array of objects[{}...]
 
+## Supported node.js frameworks
+* [express.js](https://www.npmjs.com/package/express)
+* [connect](https://www.npmjs.com/package/connect)
+
 ## Installation
 
 `npm install mongolux`
