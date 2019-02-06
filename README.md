@@ -1,4 +1,4 @@
-# Mongo Lux
+# Mongo Lux [![Build Status](https://travis-ci.com/mortillan/mongolux.svg?branch=master)](https://travis-ci.com/mortillan/mongolux)
 ###### A thin wrapper :package: to [MongoDB node.js driver](https://mongodb.github.io/node-mongodb-native/) using ES6.
 ###### No schema, no magic, just plain objects{} and array of objects[{}...]
 ## Prefer node.js version 8 onwards
